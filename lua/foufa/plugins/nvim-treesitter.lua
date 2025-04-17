@@ -50,6 +50,11 @@ return {
 		highlight = { enable = true },
 		indent = { enable = true },
 		ensure_installed = {
+			"heex",
+			"eex",
+			"erlang",
+			"elixir",
+			"html",
 			"bash",
 			"c",
 			"diff",

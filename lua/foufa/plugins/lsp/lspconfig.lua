@@ -97,7 +97,7 @@ return {
 		})
 
 		-- configure typescript server with plugin
-		lspconfig["tsserver"].setup({
+		lspconfig["ts_ls"].setup({
 			capabilities = capabilities,
 			on_attach = on_attach,
 		})
@@ -181,5 +181,18 @@ return {
 			capabilities = capabilities,
 			on_attach = on_attach,
 		})
+
+		lspconfig["gleam"].setup({})
+		lspconfig["gopls"].setup({})
+		lspconfig["lexical"].setup({
+			cmd = { "/home/anesfoufa/.local/share/nvim/mason/packages/lexical/libexec/lexical/bin/start_lexical.sh" },
+			root_dir = function(fname)
+				return lspconfig.util.root_pattern("mix.exs", ".git")(fname) or vim.loop.cwd()
+			end,
+			filetypes = { "elixir", "eelixir", "heex" },
+			-- optional settings
+			settings = {},
+		})
+		lspconfig["bashls"].setup({})
 	end,
 }

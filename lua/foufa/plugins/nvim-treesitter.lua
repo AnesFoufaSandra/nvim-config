@@ -76,6 +76,9 @@ return {
 			"scala",
 			"haskell",
 			"rust",
+			"go",
+			"elixir",
+			"bash",
 		},
 		incremental_selection = {
 			enable = true,

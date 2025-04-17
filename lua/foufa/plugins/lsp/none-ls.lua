@@ -24,16 +24,25 @@ return {
 				"fourmolu", -- Haskell formatter
 				"ast_grep",
 				"rust_analyzer",
+				"shfmt",
 			},
 		})
 
 		-- for conciseness
 		local formatting = null_ls.builtins.formatting -- to setup formatters
-		local diagnostics = null_ls.builtins.diagnostics -- to setup linters
 
 		-- to setup format on save
 		local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 
+		local gleam_source = {
+			generator = {
+				fn = function(parameter)
+					return nil
+				end,
+			},
+			filetypes = { "gleam" },
+			method = null_ls.methods.FORMATTING,
+		}
 		-- configure null_ls
 		null_ls.setup({
 			-- add package.json as identifier for root (for typescript monorepos)
@@ -48,17 +57,12 @@ return {
 				formatting.stylua, -- lua formatter
 				formatting.isort,
 				formatting.black,
-				formatting.htmlbeautifier.with({
-					filetypes = { "html" },
-				}),
 				formatting.clang_format,
 				formatting.ocamlformat,
-				diagnostics.eslint_d.with({ -- js/ts linter
-					condition = function(utils)
-						return utils.root_has_file({ ".eslintrc.js", ".eslintrc.cjs" }) -- only enable if root has .eslintrc.js or .eslintrc.cjs
-					end,
-				}),
 				formatting.fourmolu,
+				gleam_source,
+				formatting.mix,
+				formatting.shfmt,
 			},
 			-- configure format on save
 			on_attach = function(current_client, bufnr)
@@ -71,7 +75,7 @@ return {
 							vim.lsp.buf.format({
 								filter = function(client)
 									--  only use null-ls for formatting instead of lsp server
-									return client.name == "null-ls"
+									return client.name == "null-ls" or client.name == "gleam"
 								end,
 								bufnr = bufnr,
 							})

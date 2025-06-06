@@ -21,7 +21,6 @@ return {
 				"htmlbeautifier", --html formatter
 				"clang-format", -- "C formatter"
 				"ocamlformat", -- ocaml formatter
-				"fourmolu", -- Haskell formatter
 				"ast_grep",
 				"rust_analyzer",
 				"shfmt",
@@ -59,7 +58,6 @@ return {
 				formatting.black,
 				formatting.clang_format,
 				formatting.ocamlformat,
-				formatting.fourmolu,
 				gleam_source,
 				formatting.mix,
 				formatting.shfmt,
